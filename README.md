@@ -22,7 +22,7 @@ ogm-kitchensink is a [OGM](http://www.hibernate.org/subprojects/ogm.html) demo a
 
          $ mvn cargo:run
 
-* Running tests:
+* Running tests (uses Arquillian managed container):
 
          $ mvn test
 
