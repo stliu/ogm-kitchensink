@@ -31,78 +31,78 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class ContactDetails {
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	private String id;
 
-    @NotNull
-    @NotEmpty
-    @Email
-    @Field(analyze=Analyze.NO)
-    private String email;
+	@NotNull
+	@NotEmpty
+	@Email
+	@Field(analyze = Analyze.NO)
+	private String email;
 
-    @NotNull
-    @Size(min = 10, max = 12)
-    @Digits(fraction = 0, integer = 12)
-    @Field(analyze=Analyze.NO)
-    private String phoneNumber;
+	@NotNull
+	@Size(min = 10, max = 12)
+	@Digits(fraction = 0, integer = 12)
+	@Field(analyze = Analyze.NO)
+	private String phoneNumber;
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	@Override
+	public boolean equals(Object o) {
+		if ( this == o ) {
+			return true;
+		}
+		if ( o == null || getClass() != o.getClass() ) {
+			return false;
+		}
 
-        ContactDetails that = (ContactDetails) o;
+		ContactDetails that = (ContactDetails) o;
 
-        if (email != null ? !email.equals(that.email) : that.email != null) {
-            return false;
-        }
-        if (phoneNumber != null ? !phoneNumber.equals(that.phoneNumber) : that.phoneNumber != null) {
-            return false;
-        }
+		if ( email != null ? !email.equals( that.email ) : that.email != null ) {
+			return false;
+		}
+		if ( phoneNumber != null ? !phoneNumber.equals( that.phoneNumber ) : that.phoneNumber != null ) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = email != null ? email.hashCode() : 0;
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		int result = email != null ? email.hashCode() : 0;
+		result = 31 * result + ( phoneNumber != null ? phoneNumber.hashCode() : 0 );
+		return result;
+	}
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("ContactDetails");
-        sb.append("{email='").append(email).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append( "ContactDetails" );
+		sb.append( "{email='" ).append( email ).append( '\'' );
+		sb.append( ", phoneNumber='" ).append( phoneNumber ).append( '\'' );
+		sb.append( '}' );
+		return sb.toString();
+	}
 }

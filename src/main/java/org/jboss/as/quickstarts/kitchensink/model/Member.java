@@ -34,66 +34,72 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Proxy;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Norms;
+import org.hibernate.search.annotations.Store;
 
 @Entity
 @XmlRootElement
 @Indexed
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class Member implements Serializable {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	private String id;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Pattern(regexp = "[A-Za-z ]*", message = "must contain only letters and spaces")
-    @Fields({
-        @Field(analyze = Analyze.NO, norms = Norms.NO, store = Store.YES, name = "sortableStoredName"),
-        @Field(analyze = Analyze.YES, norms = Norms.YES)
-    })
-    private String name;
+	@NotNull
+	@Size(min = 1, max = 50)
+	@Pattern(regexp = "[A-Za-z ]*", message = "must contain only letters and spaces")
+	@Fields({
+			@Field(analyze = Analyze.NO, norms = Norms.NO, store = Store.YES, name = "sortableStoredName"),
+			@Field(analyze = Analyze.YES, norms = Norms.YES)
+	})
+	private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @XmlElement(name = "contacts")
-    @Valid
-    @IndexedEmbedded
-    private List<ContactDetails> contactDetails;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@XmlElement(name = "contacts")
+	@Valid
+	@IndexedEmbedded
+	private List<ContactDetails> contactDetails;
 
-    public Member() {
-        contactDetails = new ArrayList<ContactDetails>();
-    }
+	public Member() {
+		contactDetails = new ArrayList<ContactDetails>();
+	}
 
-    public String getId() {
-        return id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public List<ContactDetails> getContactDetails() {
-        return contactDetails;
-    }
+	public List<ContactDetails> getContactDetails() {
+		return contactDetails;
+	}
 
-    public void addContactDetails(ContactDetails newContactDetails) {
-        contactDetails.add(newContactDetails);
-    }
+	public void addContactDetails(ContactDetails newContactDetails) {
+		contactDetails.add( newContactDetails );
+	}
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Member");
-        sb.append("{id='").append(id).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", contactDetails=").append(contactDetails);
-        sb.append('}');
-        return sb.toString();
-    }
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder();
+		sb.append( "Member" );
+		sb.append( "{id='" ).append( id ).append( '\'' );
+		sb.append( ", name='" ).append( name ).append( '\'' );
+		sb.append( ", contactDetails=" ).append( contactDetails );
+		sb.append( '}' );
+		return sb.toString();
+	}
 }

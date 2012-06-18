@@ -33,15 +33,15 @@ import org.hibernate.search.query.dsl.QueryBuilder;
  */
 public class QueryHelper {
 
-    public static FullTextQuery createFulltextQuery(EntityManager em) {
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
-        QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
-                .buildQueryBuilder()
-                .forEntity(Member.class).get();
-        Query query = queryBuilder.all().createQuery();
-        FullTextQuery fulltextQuery = fullTextEntityManager.createFullTextQuery(query);
-        fulltextQuery.initializeObjectsWith(ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.FIND_BY_ID);
-        return fulltextQuery;
-    }
+	public static FullTextQuery createFulltextQuery(EntityManager em) {
+		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager( em );
+		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
+				.buildQueryBuilder()
+				.forEntity( Member.class ).get();
+		Query query = queryBuilder.all().createQuery();
+		FullTextQuery fulltextQuery = fullTextEntityManager.createFullTextQuery( query );
+		fulltextQuery.initializeObjectsWith( ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.FIND_BY_ID );
+		return fulltextQuery;
+	}
 
 }

@@ -19,7 +19,6 @@
 package org.jboss.as.quickstarts.kitchensink.data;
 
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
@@ -29,57 +28,59 @@ import javax.persistence.PersistenceContext;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
+import org.jboss.as.quickstarts.kitchensink.model.Member;
+
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.DatabaseRetrievalMethod;
 import org.hibernate.search.query.ObjectLookupMethod;
 import org.hibernate.search.query.dsl.QueryBuilder;
-import org.jboss.as.quickstarts.kitchensink.model.Member;
 
-@Stateless @Alternative
+@Stateless
+@Alternative
 public class FullTextMemberRepository implements MemberRepository {
 
-    @Inject
-    private QueryBuilder queryBuilder;
+	@Inject
+	private QueryBuilder queryBuilder;
 
-    @PersistenceContext(unitName="kitchen")
-    private EntityManager em;
+	@PersistenceContext(unitName = "kitchen")
+	private EntityManager em;
 
-    @Override
-    public Member findById(String id) {
-        return em.find(Member.class, id);
-    }
+	@Override
+	public Member findById(String id) {
+		return em.find( Member.class, id );
+	}
 
-    @Override
-    public Member findByEmail(String email) {
-        Query luceneQuery = queryBuilder
-                .keyword()
-                    .onField("contactDetails.email")
-                .matching(email)
-                .createQuery();
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
-        List resultList = fullTextEntityManager.createFullTextQuery(luceneQuery)
-              .initializeObjectsWith(ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.FIND_BY_ID)
-              .getResultList();
-        if (resultList.size()>0) {
-            return (Member) resultList.get(0);
-        }
-        else {
-            return null;
-        }
-    }
+	@Override
+	public Member findByEmail(String email) {
+		Query luceneQuery = queryBuilder
+				.keyword()
+				.onField( "contactDetails.email" )
+				.matching( email )
+				.createQuery();
+		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager( em );
+		List resultList = fullTextEntityManager.createFullTextQuery( luceneQuery )
+				.initializeObjectsWith( ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.FIND_BY_ID )
+				.getResultList();
+		if ( resultList.size() > 0 ) {
+			return (Member) resultList.get( 0 );
+		}
+		else {
+			return null;
+		}
+	}
 
-    @Override
-    public List<Member> findAllOrderedByName() {
-        Query luceneQuery = queryBuilder
-                .all()
-                .createQuery();
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
-        List resultList = fullTextEntityManager.createFullTextQuery(luceneQuery)
-              .initializeObjectsWith(ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.FIND_BY_ID)
-              .setSort(new Sort(new SortField("sortableStoredName", SortField.STRING_VAL)))
-              .getResultList();
-        return resultList;
-    }
+	@Override
+	public List<Member> findAllOrderedByName() {
+		Query luceneQuery = queryBuilder
+				.all()
+				.createQuery();
+		FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager( em );
+		List resultList = fullTextEntityManager.createFullTextQuery( luceneQuery )
+				.initializeObjectsWith( ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.FIND_BY_ID )
+				.setSort( new Sort( new SortField( "sortableStoredName", SortField.STRING_VAL ) ) )
+				.getResultList();
+		return resultList;
+	}
 
 }
