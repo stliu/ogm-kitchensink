@@ -10,19 +10,9 @@ ogm-kitchensink is a [OGM](http://www.hibernate.org/subprojects/ogm.html) demo a
 * JDK 6
 * [Maven 3](http://maven.apache.org/)
 * [Git](http://git-scm.com/)
-* [JBoss AS 7.1.1 "Brontes"](http://www.jboss.org/jbossas)
 
 
-## How to build it
-
-* Set the environment variable JBOSS_HOME and ensure that it points to the installation directory of a JBoss AS 7 installation (tested against JBoss AS 7.1.1.Final "Brontes")
-* Install the Hibernate OGM module (needs to be only executes once)
-
-         $ mvn groovy:execute
-
-* Start JBoss AS 7
-
-         $ $JBOSS_HOME/bin/standalone.sh
+## How to use it:
 
 * Build:
 
@@ -30,17 +20,11 @@ ogm-kitchensink is a [OGM](http://www.hibernate.org/subprojects/ogm.html) demo a
 
 * Deploy:
 
-         $ mvn jboss-as:deploy
+         $ mvn cargo:run
 
-## Running tests
+* Running tests:
 
-### Managed container
-
-    $ mvn test
-
-### Remote container
-
-    $ mvn test -DremoteTests=true
+         $ mvn test
 
 ## How to deploy on OpenShift Express
 
