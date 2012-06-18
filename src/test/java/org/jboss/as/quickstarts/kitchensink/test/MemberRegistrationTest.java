@@ -16,12 +16,8 @@
  */
 package org.jboss.as.quickstarts.kitchensink.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.util.List;
 import java.util.logging.Logger;
-
 import javax.inject.Inject;
 
 import org.jboss.as.quickstarts.kitchensink.controller.MemberController;
@@ -45,114 +41,117 @@ import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 public abstract class MemberRegistrationTest {
 
-    public final static String[] dependencyExclusions = {
-        "org.hibernate:hibernate-search-analyzers",
-        "org.hibernate:hibernate-core",
-        "org.hibernate.javax.persistence:*",
-        "org.hibernate.common:*",
-        "org.jboss.logging:*",
-        "org.jboss.shrinkwrap:*",
-        "org.infinispan:*",
-        "dom4j:*",
-        "org.javassist:*",
-        "org.javassist:*"
-    };
+	public final static String[] dependencyExclusions = {
+			"org.hibernate:hibernate-search-analyzers",
+			"org.hibernate:hibernate-core",
+			"org.hibernate.javax.persistence:*",
+			"org.hibernate.common:*",
+			"org.jboss.logging:*",
+			"org.jboss.shrinkwrap:*",
+			"org.infinispan:*",
+			"dom4j:*",
+			"org.javassist:*",
+			"org.javassist:*"
+	};
 
-    public static Archive<?> createTestArchive(String persistenceUnitConfigurationSource, String cdiBeansConfigurationSource, String warName) {
-        MavenDependencyResolver resolver = DependencyResolvers.use(MavenDependencyResolver.class)
-                .goOffline();// take SNAPSHOTS from your local cache: greatly speedups development
-        return ShrinkWrap
-                .create(WebArchive.class, warName)
-                .addClasses(
-                        MemberRegistrationTest.class,
-                        MemberController.class,
-                        MemberListProducer.class,
-                        CriteriaMemberRepository.class,
-                        FullTextMemberRepository.class,
-                        MemberRepository.class,
-                        ContactDetails.class,
-                        Member.class,
-                        JaxRsActivator.class,
-                        MemberResourceRESTService.class,
-                        MemberRegistration.class,
-                        QueryHelper.class,
-                        Resources.class,
-                        FacesContextStub.class)
-                .addAsResource(persistenceUnitConfigurationSource, "META-INF/persistence.xml")
-                .addAsResource("infinispan.xml", "infinispan.xml")
-                .addAsResource("infinispan-ogm-config.xml", "infinispan-ogm-config.xml")
-                .addAsWebInfResource(cdiBeansConfigurationSource, "beans.xml")
-                .addAsWebInfResource(new StringAsset("<faces-config version=\"2.0\"/>"), "faces-config.xml")
-                .addAsWebInfResource("jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
-                .addAsLibraries(
-                        resolver
-                            .artifact("org.hibernate:hibernate-search-orm:4.1.1.Final")
-                            .exclusions(dependencyExclusions)
-                            .resolveAs(JavaArchive.class)
-                        )
-                .addAsLibraries(
-                        resolver
-                            .artifact("org.hibernate:hibernate-search-infinispan:4.1.1.Final")
-                            .exclusions(dependencyExclusions)
-                            .resolveAs(JavaArchive.class)
-                        )
-                .addAsLibraries(
-                        resolver
-                            .artifact("org.infinispan:infinispan-lucene-directory:5.1.5.FINAL") //MUST MATCH the Infinispan version of the AS
-                            .exclusions(dependencyExclusions)
-                            .resolveAs(JavaArchive.class)
-                        )
-                ;
-    }
+	public static Archive<?> createTestArchive(String persistenceUnitConfigurationSource, String cdiBeansConfigurationSource, String warName) {
+		MavenDependencyResolver resolver = DependencyResolvers.use( MavenDependencyResolver.class );
+		return ShrinkWrap
+				.create( WebArchive.class, warName )
+				.addClasses(
+						MemberRegistrationTest.class,
+						MemberController.class,
+						MemberListProducer.class,
+						CriteriaMemberRepository.class,
+						FullTextMemberRepository.class,
+						MemberRepository.class,
+						ContactDetails.class,
+						Member.class,
+						JaxRsActivator.class,
+						MemberResourceRESTService.class,
+						MemberRegistration.class,
+						QueryHelper.class,
+						Resources.class,
+						FacesContextStub.class
+				)
+				.addAsResource( persistenceUnitConfigurationSource, "META-INF/persistence.xml" )
+				.addAsResource( "infinispan.xml", "infinispan.xml" )
+				.addAsResource( "infinispan-ogm-config.xml", "infinispan-ogm-config.xml" )
+				.addAsWebInfResource( cdiBeansConfigurationSource, "beans.xml" )
+				.addAsWebInfResource( new StringAsset( "<faces-config version=\"2.0\"/>" ), "faces-config.xml" )
+				.addAsWebInfResource( "jboss-deployment-structure.xml", "jboss-deployment-structure.xml" )
+				.addAsLibraries(
+						resolver
+								.artifact( "org.hibernate:hibernate-search-orm:4.1.1.Final" )
+								.exclusions( dependencyExclusions )
+								.resolveAs( JavaArchive.class )
+				)
+				.addAsLibraries(
+						resolver
+								.artifact( "org.hibernate:hibernate-search-infinispan:4.1.1.Final" )
+								.exclusions( dependencyExclusions )
+								.resolveAs( JavaArchive.class )
+				)
+				.addAsLibraries(
+						resolver
+								.artifact( "org.infinispan:infinispan-lucene-directory:5.1.5.FINAL" ) //MUST MATCH the Infinispan version of the AS
+								.exclusions( dependencyExclusions )
+								.resolveAs( JavaArchive.class )
+				)
+				;
+	}
 
-    @Inject
-    MemberController memberController;
+	@Inject
+	MemberController memberController;
 
-    @Inject
-    MemberListProducer membersRegister;
+	@Inject
+	MemberListProducer membersRegister;
 
-    @Inject
-    Logger log;
+	@Inject
+	Logger log;
 
-    @Test
-    public void testRegister() throws Exception {
-        FacesContextStub.setCurrentInstance(new FacesContextStub("test"));
+	@Test
+	public void testRegister() throws Exception {
+		FacesContextStub.setCurrentInstance( new FacesContextStub( "test" ) );
 
-        List<Member> members = membersRegister.getMembers();
-        assertEquals(0, members.size());
+		List<Member> members = membersRegister.getMembers();
+		assertEquals( 0, members.size() );
 
-        Member newMember = memberController.getNewMember();
-        newMember.setName("Jane Doe");
+		Member newMember = memberController.getNewMember();
+		newMember.setName( "Jane Doe" );
 
-        ContactDetails newContactDetails = memberController.getContactDetails();
-        newContactDetails.setEmail("jane@mailinator.com");
-        newContactDetails.setPhoneNumber("2125551234");
+		ContactDetails newContactDetails = memberController.getContactDetails();
+		newContactDetails.setEmail( "jane@mailinator.com" );
+		newContactDetails.setPhoneNumber( "2125551234" );
 
-        memberController.register();
+		memberController.register();
 
-        assertNotNull(newMember.getId());
-        log.info(newMember.getName() + " was persisted with id " + newMember.getId());
+		assertNotNull( newMember.getId() );
+		log.info( newMember.getName() + " was persisted with id " + newMember.getId() );
 
-        members = membersRegister.getMembers();
-        assertEquals(1, members.size());
+		members = membersRegister.getMembers();
+		assertEquals( 1, members.size() );
 
-        //now test sorting on multiple names:
-        memberController.initNewMember();
-        newMember = memberController.getNewMember();
-        newMember.setName("Alan Doe");
-        newContactDetails = memberController.getContactDetails();
+		//now test sorting on multiple names:
+		memberController.initNewMember();
+		newMember = memberController.getNewMember();
+		newMember.setName( "Alan Doe" );
+		newContactDetails = memberController.getContactDetails();
 
-        newContactDetails.setEmail("alan@mailinator.com");
-        newContactDetails.setPhoneNumber("3125551234");
+		newContactDetails.setEmail( "alan@mailinator.com" );
+		newContactDetails.setPhoneNumber( "3125551234" );
 
-        memberController.register();
-        members = membersRegister.getMembers();
-        assertEquals(2, members.size());
+		memberController.register();
+		members = membersRegister.getMembers();
+		assertEquals( 2, members.size() );
 
-        assertEquals("Alan Doe", members.get(0).getName());
-        assertEquals("Jane Doe", members.get(1).getName());
-    }
+		assertEquals( "Alan Doe", members.get( 0 ).getName() );
+		assertEquals( "Jane Doe", members.get( 1 ).getName() );
+	}
 
 }
