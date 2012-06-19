@@ -1,16 +1,20 @@
 # Prerequisites
 
+## Required
+
 * JDK 6
 * [Maven 3](http://maven.apache.org/)
 * [Git](http://git-scm.com/)
-* [JBoss AS 7 "Zap"](http://www.jboss.org/jbossas)
-* [rvm](http://beginrescueend.com/) (optional)
-* [ruby](http://www.ruby-lang.org/en/)
-    * Required Gems (for member generator):
 
-                $ gem install httparty
-                $ gem install nokogiri
-                $ gem install choice
+## Optional
+
+* [rvm](http://beginrescueend.com/)
+* [ruby](http://www.ruby-lang.org/en/)
+* Required Gems :
+
+        $ gem install httparty
+        $ gem install nokogiri
+        $ gem install choice
 
 # JPA
 
@@ -21,24 +25,16 @@
     * look no _web.xml_ :-)
 * Run Arquillian test (eg remotely, server must be running)
 
-        $ mvn test -DremoteTests=true
+        $ mvn test
 
-* Deploy using the JBoss command line tools: 
+* Deploy using cargo:
  
-        $ mvn clean package
-        $ jboss-admin.sh
-        > connect
-        > deploy target/ogm-kitchensink.war
+        $ mvn clean package cargo:run
 
 * Demo site - [ogm-kitchensink](http://localhost:8080/ogm-kitchensink)
 * Create some test members:
 
         $ ruby member-generator.rb -a http://localhost:8080/ogm-kitchensink -c 20
-        
-* Undeploy:
-
-        > undeploy target/ogm-kitchensink.war
-        > quit
 
 # OGM
 * Switch to OGM (replacement code should be already in the source commented out)
@@ -50,10 +46,9 @@
            * Need to add Search annotations
            * Switch from Criteria to Search in _MemberListProducer_ and _MemberResourceRESTService_
        * Enable displaying of Infinispan cache in _index.xhtml_ (optional)
-* Deploy w/ maven plugin:
+* Deploy:
 
-        $ mvn clean package
-        $ mvn jboss-as:deploy
+        $  mvn clean package cargo:run
 
 * Demo site - [ogm-kitchensink](http://localhost:8080/ogm-kitchensink)
 * Create some test members:
@@ -69,6 +64,11 @@
         $ rvm gemset create ogm
         $ rvm gemset use ogm
         $ gem install rhc
+        // for the ruby script
+        $ gem install httparty
+        $ gem install nokogiri
+        $ gem install choice
+
 
 * Use the rhc commands to create domain and applications (well, ogm domain is already created, use different one if you want to demo it)
 
