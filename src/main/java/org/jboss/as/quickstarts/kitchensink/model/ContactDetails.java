@@ -24,8 +24,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -39,13 +37,11 @@ public class ContactDetails {
 	@NotNull
 	@NotEmpty
 	@Email
-	@Field(analyze = Analyze.NO)
 	private String email;
 
 	@NotNull
 	@Size(min = 10, max = 12)
 	@Digits(fraction = 0, integer = 12)
-	@Field(analyze = Analyze.NO)
 	private String phoneNumber;
 
 	public String getId() {

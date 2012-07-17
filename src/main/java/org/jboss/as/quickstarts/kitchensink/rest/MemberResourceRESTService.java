@@ -71,9 +71,9 @@ public class MemberResourceRESTService {
 	}
 
 	@GET
-	@Path("/{id:[0-9,a-z][0-9,a-z,\\-]*}")
+	@Path("/{id:[0-9][0-9]*}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Member lookupMemberById(@PathParam("id") String id) {
+	public Member lookupMemberById(@PathParam("id") long id) {
 		Member member = repository.findById( id );
 		if ( member == null ) {
 			throw new WebApplicationException( Response.Status.NOT_FOUND );

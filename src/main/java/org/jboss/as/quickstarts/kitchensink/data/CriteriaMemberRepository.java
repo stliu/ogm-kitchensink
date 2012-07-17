@@ -35,7 +35,7 @@ public class CriteriaMemberRepository implements MemberRepository {
 	private EntityManager em;
 
 	@Override
-	public Member findById(String id) {
+	public Member findById(long id) {
 		return em.find( Member.class, id );
 	}
 

@@ -32,47 +32,29 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Proxy;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Fields;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.IndexedEmbedded;
-import org.hibernate.search.annotations.Norms;
-import org.hibernate.search.annotations.Store;
-
 @Entity
 @XmlRootElement
-@Indexed
-@Proxy(lazy = false)
 public class Member implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	private String id;
+	@GeneratedValue
+	private long id;
 
 	@NotNull
 	@Size(min = 1, max = 50)
 	@Pattern(regexp = "[A-Za-z ]*", message = "must contain only letters and spaces")
-	@Fields({
-			@Field(analyze = Analyze.NO, norms = Norms.NO, store = Store.YES, name = "sortableStoredName"),
-			@Field(analyze = Analyze.YES, norms = Norms.YES)
-	})
 	private String name;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@XmlElement(name = "contacts")
 	@Valid
-	@IndexedEmbedded
 	private List<ContactDetails> contactDetails;
 
 	public Member() {
 		contactDetails = new ArrayList<ContactDetails>();
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 

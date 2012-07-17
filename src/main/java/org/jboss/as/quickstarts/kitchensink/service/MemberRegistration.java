@@ -20,10 +20,9 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import org.jboss.as.quickstarts.kitchensink.model.Member;
-
-import org.hibernate.search.jpa.FullTextEntityManager;
 
 // The @Stateless annotation eliminates the need for manual transaction demarcation
 @Stateless
@@ -33,7 +32,7 @@ public class MemberRegistration {
 	private Logger log;
 
 	@Inject
-	private FullTextEntityManager em;
+	private EntityManager em;
 
 	@Inject
 	private Event<Member> memberEventSrc;
