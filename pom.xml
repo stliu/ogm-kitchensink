@@ -105,6 +105,12 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
+                <groupId>org.hibernate.ogm</groupId>
+                <artifactId>hibernate-ogm-mongodb</artifactId>
+                <version>${hibernateOgmVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-search-orm</artifactId>
                 <version>${hibernateSearchVersion}</version>
