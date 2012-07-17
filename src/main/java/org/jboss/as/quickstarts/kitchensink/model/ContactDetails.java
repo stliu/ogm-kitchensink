@@ -23,16 +23,14 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class ContactDetails {
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	private String id;
+	@GeneratedValue
+	private long id;
 
 	@NotNull
 	@NotEmpty
@@ -44,7 +42,7 @@ public class ContactDetails {
 	@Digits(fraction = 0, integer = 12)
 	private String phoneNumber;
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
