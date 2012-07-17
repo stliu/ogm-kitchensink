@@ -106,7 +106,7 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.ogm</groupId>
-                <artifactId>hibernate-ogm-mongodb</artifactId>
+                <artifactId>hibernate-ogm-infinsipan</artifactId>
                 <version>${hibernateOgmVersion}</version>
                 <scope>provided</scope>
             </dependency>
