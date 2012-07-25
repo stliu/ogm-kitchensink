@@ -38,6 +38,7 @@
             <property name="hibernate.ogm.mongodb.database" value="jbug"/>
             <property name="hibernate.ogm.mongodb.username" value="admin"/>
             <property name="hibernate.ogm.mongodb.password" value="ZHrwNgIyLqiD"/>
+            <property name="hibernate.ogm.mongodb.safe" value="true"/>
         </properties>
         <class>org.jboss.as.quickstarts.kitchensink.model.Member</class>
         <class>org.jboss.as.quickstarts.kitchensink.model.ContactDetails</class>
