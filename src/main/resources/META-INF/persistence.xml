@@ -39,6 +39,11 @@
 
             <property name="hibernate.ogm.mongodb.username" value="admin"/>
             <property name="hibernate.ogm.mongodb.password" value="RmFI1kPDBHUD"/>
+
+
+            <!--<property name="hibernate.ogm.mongodb.username" value="root"/>-->
+            <!--<property name="hibernate.ogm.mongodb.password" value="root"/>-->
+
             <!--<property name="hibernate.ogm.mongodb.safe" value="true"/>-->
         </properties>
         <class>org.jboss.as.quickstarts.kitchensink.model.Member</class>
