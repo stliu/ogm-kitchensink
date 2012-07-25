@@ -33,12 +33,13 @@
         <properties>
             <property name="hibernate.ogm.datastore.provider"
                       value="org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider"/>
-            <property name="hibernate.ogm.mongodb.host" value="127.7.202.1"/>
-            <property name="hibernate.ogm.mongodb.port" value="27017"/>
             <property name="hibernate.ogm.mongodb.database" value="jbug"/>
-            <property name="hibernate.ogm.mongodb.username" value="admin"/>
-            <property name="hibernate.ogm.mongodb.password" value="ZHrwNgIyLqiD"/>
-            <property name="hibernate.ogm.mongodb.safe" value="true"/>
+            <!--<property name="hibernate.ogm.mongodb.host" value="127.7.202.1"/>-->
+            <!--<property name="hibernate.ogm.mongodb.port" value="27017"/>-->
+
+            <!--<property name="hibernate.ogm.mongodb.username" value="admin"/>-->
+            <!--<property name="hibernate.ogm.mongodb.password" value="ZHrwNgIyLqiD"/>-->
+            <!--<property name="hibernate.ogm.mongodb.safe" value="true"/>-->
         </properties>
         <class>org.jboss.as.quickstarts.kitchensink.model.Member</class>
         <class>org.jboss.as.quickstarts.kitchensink.model.ContactDetails</class>
