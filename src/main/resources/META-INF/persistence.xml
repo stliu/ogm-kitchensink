@@ -36,7 +36,7 @@
             <property name="hibernate.ogm.mongodb.database" value="jbug"/>
             <property name="hibernate.ogm.mongodb.host" value="127.12.92.129"/>
             <property name="hibernate.ogm.mongodb.port" value="27017"/>
-
+            <property name="hibernate.search.Rules.directory_provider" value="ram"/>
             <property name="hibernate.ogm.mongodb.username" value="admin"/>
             <property name="hibernate.ogm.mongodb.password" value="RmFI1kPDBHUD"/>
         </properties>
